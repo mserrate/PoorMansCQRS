@@ -1,0 +1,96 @@
+﻿@model PoorMansCQRS.ReadModel.ProjectDetails
+
+<script type="text/javascript">
+$(function()
+{
+    $("#tabs").tabs();
+
+    $('#btnChangeDeliveryDate').click(function () {
+        $('#changeDeliveryDate').dialog('open');
+    });
+
+    $("#changeDeliveryDate").dialog({
+        autoOpen: false,
+        modal: true,
+        open: function(event, ui) {
+            $(this).load("@Url.Action("ChangeDeliveryDate", new { id = Model.Id })");
+        },
+        buttons: {
+            Change: function () {
+                $.ajax({
+                    url: "@Url.Action("ChangeDeliveryDate")",
+                    type: "POST",
+                    data: $("#changeDateForm").serialize(),
+                    success: function() {
+                        $("#displayDate").html($("#changeDateForm #DeliveryDate").val());
+                        $("#changeDeliveryDate").dialog("close");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        var jsonError = JSON.parse(xhr.responseText);
+                        alert("Error: " + jsonError.Message);
+                    },
+                });                           
+            },
+            Cancel: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+});
+</script>
+
+<h2>Details of @Model.Name</h2>
+
+<div id="tabs">
+    <ul>
+        <li><a href="#projectDetails">Project Details</a></li>
+        <li>@Html.ActionLink("List of Tasks", "TaskList", new { id = Model.Id })</li>
+    </ul>
+    <div id="projectDetails">
+        <div class="toolbar">
+            <div>
+                <button id="btnChangeDeliveryDate">Change Delivery Date</button> 
+            </div>
+            <div>
+                @using (Html.BeginForm("Close", "Project"))
+                {
+                    @Html.HiddenFor(model => model.Id)
+                    <input type="submit" value="Close Project" />
+                }
+            </div>
+            <div>
+                @using (Html.BeginForm("Deactivate", "Project"))
+                {
+                    @Html.HiddenFor(model => model.Id)
+                    <input type="submit" value="Deactivate Project" />
+                }
+            </div>
+        </div>
+
+        <div class="display-label">Code</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Code)
+        </div>
+
+        <div class="display-label">Name</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Name)
+        </div>
+
+        <div class="display-label">Delivery Date</div>
+        <div id="displayDate" class="display-field">
+            @Html.DisplayFor(model => model.DeliveryDate)
+        </div> 
+
+        <div class="display-label">Status</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Status)
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to Project List", "Index")
+</p>
+
+<div id="changeDeliveryDate" title="ChangeDeliveryDate"></div>
+

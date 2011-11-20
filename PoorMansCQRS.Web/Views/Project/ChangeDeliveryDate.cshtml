@@ -1,0 +1,32 @@
+﻿@model PoorMansCQRS.Web.Models.ChangeDeliveryDate
+
+@{
+    // HACK: jQuery datetime format != CultureInfo datetime format
+    var jqueryFormat = System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern
+        .Replace("M", "m") 
+        .Replace("yy", "y"); 
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#DeliveryDate").datepicker({ dateFormat: "@jqueryFormat" });
+    });
+</script>
+
+@using (Html.BeginForm("ChangeDeliveryDate", "Project", FormMethod.Post, new { id = "changeDateForm" }))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Change Delivery Date</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DeliveryDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DeliveryDate)
+            @Html.ValidationMessageFor(model => model.DeliveryDate)
+        </div>
+    </fieldset>
+}

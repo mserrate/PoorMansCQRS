@@ -1,0 +1,31 @@
+﻿@model IEnumerable<PoorMansCQRS.ReadModel.TaskItem>
+
+<p>
+    @Html.ActionLink("Add Task", "Add", "Task", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
+</p>
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", "Task", new { id=item.Id }, null)
+        </td>
+    </tr>
+}
+
+</table>
