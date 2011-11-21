@@ -18,14 +18,7 @@ namespace PoorMansCQRS.Infrastructure.Installers
 
                 AllTypes.FromAssemblyContaining<AddProjectCommandHandler>()
                 .BasedOn(typeof(ICommandHandler<>))
-                //.If(Component.IsInSameNamespaceAs<BookBoardRoomCommandHandler>())
                 .WithService.Base()
-                //.Configure(c => c.LifeStyle.Transient)
-
-                //AllTypes.FromAssemblyContaining<BookBoardRoomCommand>()
-                //.BasedOn<ICommand>()
-                //.If(Component.IsInSameNamespaceAs<BookBoardRoomCommand>())
-                //.Configure(c => c.LifeStyle.Transient)
             );
         }
     }
