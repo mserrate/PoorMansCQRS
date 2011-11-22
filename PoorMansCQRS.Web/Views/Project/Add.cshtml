@@ -27,7 +27,7 @@
             @Html.LabelFor(model => model.DeliveryDate)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.DeliveryDate)
+            @Html.Partial("DateTime", Model.DeliveryDate)
             @Html.ValidationMessageFor(model => model.DeliveryDate)
         </div>
 

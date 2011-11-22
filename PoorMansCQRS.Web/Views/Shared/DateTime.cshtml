@@ -1,0 +1,16 @@
+﻿@model DateTime
+           
+@{
+    // HACK: jQuery datetime format != CultureInfo datetime format
+    var jqueryFormat = System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern
+        .Replace("M", "m") 
+        .Replace("yy", "y"); 
+}
+
+<script type="text/javascript">
+    $(function () {
+        $(".date").datepicker({ dateFormat: "@jqueryFormat" });
+    });
+</script>
+
+@Html.TextBox("DeliveryDate", Model, new { @class = "date" })

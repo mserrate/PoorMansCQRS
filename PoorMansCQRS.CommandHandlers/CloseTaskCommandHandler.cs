@@ -19,7 +19,7 @@ namespace PoorMansCQRS.CommandHandlers
         public void Handle(CloseTaskCommand command)
         {
             var aggregate = _repository.GetById(command.ProjectId);
-            aggregate.DeactivateTask(command.TaskId);
+            aggregate.CloseTask(command.TaskId);
             _repository.Save(aggregate);
         }
     }

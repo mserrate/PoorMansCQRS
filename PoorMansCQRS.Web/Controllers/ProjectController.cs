@@ -40,7 +40,7 @@ namespace PoorMansCQRS.Web.Controllers
 
         public ActionResult Add()
         {
-            return View();
+            return View(new AddProject() { DeliveryDate = DateTime.Now.Date });
         }
 
         [HttpPost]
